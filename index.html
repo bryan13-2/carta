@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta De Amor 💖</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+    background:radial-gradient(circle at top,#1a1026,#000);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#ffd6e0;
+}
+
+/* 🎬 INTRO */
+.intro{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+    animation:fadeIntro 5s forwards;
+}
+
+.intro h1{
+    font-size:45px;
+    letter-spacing:5px;
+    animation:glow 2s infinite alternate;
+}
+
+.intro p{
+    margin-top:10px;
+    opacity:0.7;
+    font-size:18px;
+}
+
+@keyframes glow{
+    from{
+        text-shadow:0 0 10px #ff4d6d;
+    }
+    to{
+        text-shadow:0 0 25px #ff99aa;
+    }
+}
+
+@keyframes fadeIntro{
+    0%{opacity:1;}
+    80%{opacity:1;}
+    100%{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* 🌌 ESTRELLAS */
+.star{
+    position:absolute;
+    background:#ff8fab;
+    border-radius:50%;
+    animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:0.2;}
+    to{opacity:1;}
+}
+
+/* 💌 CARTA */
+.envelope{
+    width:90vw;
+    max-width:430px;
+    height:300px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    backdrop-filter:blur(20px);
+    border-radius:25px;
+    box-shadow:0 30px 100px rgba(0,0,0,0.8);
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:0.5s;
+}
+
+.envelope:hover{
+    transform:scale(1.03);
+}
+
+/* 💌 SOLAPA */
+.flap{
+    position:absolute;
+    top:0;
+    width:0;
+    height:0;
+    border-left:215px solid transparent;
+    border-right:215px solid transparent;
+    border-top:150px solid #ff4d6d;
+    transform-origin:top;
+    transition:1s ease;
+    z-index:3;
+}
+
+.open .flap{
+    transform:rotateX(180deg);
+}
+
+/* 📜 CARTA */
+.letter{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:0;
+    background:#ffe4ec;
+    color:#5a2a35;
+    padding:20px;
+    overflow:hidden;
+    border-radius:20px;
+    transition:1.2s ease;
+    z-index:2;
+}
+
+.open .letter{
+    height:290px;
+}
+
+/* ✍️ TEXTO */
+.text{
+    font-size:14px;
+    line-height:1.7;
+    white-space:pre-wrap;
+}
+
+.text strong{
+    font-size:18px;
+    color:#ff2e63;
+}
+
+/* ❤️ CORAZÓN */
+.bigHeart{
+    font-size:120px;
+    color:#ff004c;
+    text-align:center;
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+
+/* 🌙 PARTÍCULAS */
+.bokeh{
+    position:absolute;
+    bottom:-20px;
+    color:rgba(255,182,193,0.7);
+    animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+    0%{
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-120vh) scale(1.8);
+        opacity:0;
+    }
+}
+
+/* 🎵 BOTONES */
+.btn,
+.toggleCarta{
+    position:absolute;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.2);
+    padding:10px 18px;
+    border-radius:25px;
+    color:#ffd6e0;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+    z-index:1000;
+    transition:0.3s;
+}
+
+.btn:hover,
+.toggleCarta:hover{
+    transform:scale(1.08);
+    background:rgba(255,255,255,0.2);
+}
+
+.btn{
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.toggleCarta{
+    top:20px;
+    right:20px;
+}
+
+/* 🔄 BOTÓN REINICIAR */
+.restartBtn{
+    position:fixed;
+    bottom:90px;
+    right:25px;
+    padding:14px 22px;
+    border:none;
+    border-radius:40px;
+    background:linear-gradient(45deg,#ff4d6d,#ff8fab);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 25px rgba(255,77,109,0.6);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(30px);
+    transition:0.6s;
+    z-index:3000;
+    animation:floatBtn 2s ease-in-out infinite;
+}
+
+.restartBtn.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+@keyframes floatBtn{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+    100%{transform:translateY(0);}
+}
+
+/* 📥 BOTÓN DESCARGAR */
+.downloadBtn{
+    position:fixed;
+    bottom:120px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:14px 24px;
+    border:none;
+    border-radius:40px;
+    background:linear-gradient(45deg,#ff2e63,#ff8fab);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 25px rgba(255,46,99,0.6);
+    opacity:0;
+    visibility:hidden;
+    transition:0.6s;
+    z-index:4000;
+    animation:pulseDownload 2s infinite;
+}
+
+.downloadBtn.show{
+    opacity:1;
+    visibility:visible;
+}
+
+@keyframes pulseDownload{
+    0%{
+        transform:translateX(-50%) scale(1);
+    }
+    50%{
+        transform:translateX(-50%) scale(1.05);
+    }
+    100%{
+        transform:translateX(-50%) scale(1);
+    }
+}
+
+/* 📢 INSTRUCCIONES */
+.instructions{
+    position:absolute;
+    top:90px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2);
+    padding:14px 22px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    color:#ffd6e0;
+    font-size:14px;
+    text-align:center;
+    z-index:2000;
+    max-width:90%;
+    transition:0.6s;
+    animation:pulseInstruction 2s infinite;
+    display:none;
+    opacity:0;
+}
+
+.instructions.show{
+    display:block;
+    opacity:1;
+}
+
+.instructions.hide{
+    display:none;
+    opacity:0;
+}
+
+@keyframes pulseInstruction{
+    0%{opacity:0.5;}
+    50%{opacity:1;}
+    100%{opacity:0.5;}
+}
+
+/* 💖 CHISPAS */
+.spark{
+    position:absolute;
+    pointer-events:none;
+    animation:sparkle 1s linear forwards;
+}
+
+@keyframes sparkle{
+    0%{
+        transform:scale(0) translateY(0);
+        opacity:1;
+    }
+    100%{
+        transform:scale(1.5) translateY(-60px);
+        opacity:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 🎬 INTRO -->
+<div class="intro">
+    <h1>Carta De Amor</h1>
+    <p>Bryan Producción Presenta. 💖</p>
+</div>
+
+<!-- 📢 INSTRUCCIONES -->
+<div class="instructions hide" id="instructions">
+🎵 Puedes oprimir el botón de música para empezar.<br>
+También puedes activarla y desactivarla cuando quieras 💖<br><br>
+💌 Luego presiona la carta para comenzar.
+</div>
+
+<!-- 🎵 MÚSICA -->
+<audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<button class="btn" onclick="toggleMusic()">
+🎵 Música
+</button>
+
+<!-- 💌 BOTÓN -->
+<button class="toggleCarta" onclick="toggleCarta(event)">
+💌 Abrir / Cerrar
+</button>
+
+<!-- 🔄 VOLVER A LEER -->
+<button class="restartBtn" id="restartBtn" onclick="reiniciarHistoria()">
+🔄 Volver a leer
+</button>
+
+<!-- 📥 DESCARGAR -->
+<button class="downloadBtn" id="downloadBtn" onclick="descargarImagen()">
+💖 Presióname No Te Arrepentiras
+</button>
+
+<!-- 💌 CARTA -->
+<div class="envelope" id="carta" onclick="nextScene()">
+
+    <div class="flap"></div>
+
+    <div class="letter">
+        <p class="text" id="mensaje"></p>
+    </div>
+
+</div>
+
+<script>
+
+let musica = document.getElementById("musica");
+let playing = false;
+
+function toggleMusic(){
+
+    if(!playing){
+        musica.play();
+        playing = true;
+    }else{
+        musica.pause();
+        playing = false;
+    }
+}
+
+/* 🎬 ESCENAS */
+const escenas = [
+
+`<strong>🌌 Espero Disfrutes El Viaje Por Estas Paginas...</strong>
+
+Entre miles de personas,
+la vida decidió cruzar nuestros caminos...
+
+Y aunque parecía un día normal,
+algo dentro de mí supo que serías especial 💖`,
+
+`<strong>✨ Segunda Pagina Aun No se Acaba...</strong>
+
+Desde que llegaste...
+
+Las noches se volvieron más bonitas,
+Las sonrisas más sinceras,
+Y los silencios menos fríos.
+
+✨ Te convertiste en mi lugar favorito ✨`,
+
+`<strong>💫 Tercera Pagina Ya Falta Poco...</strong>
+
+No sé cómo explicarlo...
+
+Pero contigo el tiempo corre diferente.
+Todo parece más bonito,
+Más tranquilo,
+Más vivo ✨`,
+
+`<strong>🌙 Cuarta Pagina Espero Te Este Gustando...</strong>
+
+En el momento que estoy pensando en ti,
+sin darme cuenta...
+
+Es como si mi corazón
+Se hubiera aprendido tu nombre
+antes que mis propios pensamientos 💖`,
+
+`<strong>🌹 Quinta Pagina Llegaste A La Recta Final...</strong>
+
+Y entonces entendí algo...
+
+No necesito un cuento perfecto,
+Ni un mundo perfecto...
+
+Si puedo compartir mis días contigo ✨❤️`,
+
+`<strong>❤️ Sexta Y Ultima...</strong>
+
+Gracias por existir.
+Gracias por quedarte.
+Gracias por hacer que mi corazón sonría.
+
+Y si volviera a comenzar...
+Volvería a elegirte a ti 💖`
+];
+
+let escena = 0;
+let i = 0;
+let escribiendo = false;
+let abierta = false;
+
+/* ✨ MOSTRAR INSTRUCCIONES */
+setTimeout(()=>{
+
+    const instructions = document.getElementById("instructions");
+
+    instructions.classList.remove("hide");
+
+    setTimeout(()=>{
+        instructions.classList.add("show");
+    },50);
+
+},5200);
+
+/* 💌 ABRIR / CERRAR */
+function toggleCarta(event){
+
+    event.stopPropagation();
+
+    const carta = document.getElementById("carta");
+
+    if(abierta){
+        carta.classList.remove("open");
+        abierta = false;
+    }else{
+        carta.classList.add("open");
+        abierta = true;
+    }
+}
+
+/* 💖 CHISPAS */
+function createSpark(x,y){
+
+    const spark = document.createElement("div");
+
+    spark.classList.add("spark");
+    spark.innerHTML = "💖";
+
+    spark.style.left = x + "px";
+    spark.style.top = y + "px";
+    spark.style.fontSize = (10 + Math.random()*20) + "px";
+
+    document.body.appendChild(spark);
+
+    setTimeout(()=>spark.remove(),1000);
+}
+
+/* 🎬 CAMBIAR ESCENAS */
+function nextScene(){
+
+    if(escribiendo) return;
+
+    const carta = document.getElementById("carta");
+    const el = document.getElementById("mensaje");
+    const instructions = document.getElementById("instructions");
+
+    instructions.classList.remove("show");
+    instructions.classList.add("hide");
+
+    carta.classList.add("open");
+    abierta = true;
+
+    if(escena >= escenas.length){
+
+        el.innerHTML = `
+        <div class="bigHeart">❤️</div>
+
+        <h2 style="text-align:center;color:#ff4d6d;margin-top:10px;">
+            Te Quiero Mucho 💖
+        </h2>
+        `;
+
+        document.getElementById("restartBtn")
+        .classList.add("show");
+
+        document.getElementById("downloadBtn")
+        .classList.add("show");
+
+        return;
+    }
+
+    let texto = escenas[escena];
+
+    el.innerHTML = "";
+
+    escribiendo = true;
+
+    function escribir(){
+
+        if(i <= texto.length){
+
+            el.innerHTML = texto.substring(0, i);
+
+            if(Math.random() < 0.08){
+
+                let rect = carta.getBoundingClientRect();
+
+                createSpark(
+                    rect.left + Math.random()*rect.width,
+                    rect.top + Math.random()*rect.height
+                );
+            }
+
+            i++;
+
+            let velocidad = 20 + Math.random()*30;
+
+            setTimeout(escribir, velocidad);
+
+        }else{
+
+            escena++;
+            i = 0;
+            escribiendo = false;
+
+            setTimeout(()=>{
+
+                instructions.innerHTML = `
+                💌 Puedes volver a presionar la carta<br>
+                para continuar con la siguiente pagina ✨
+                `;
+
+                instructions.classList.remove("hide");
+
+                setTimeout(()=>{
+                    instructions.classList.add("show");
+                },50);
+
+            },500);
+        }
+    }
+
+    escribir();
+}
+
+/* 📥 DESCARGAR IMAGEN */
+function descargarImagen(){
+
+    const link = document.createElement("a");
+
+    link.href = "imagen.jpeg";
+    // Cambia esto por el nombre de tu imagen
+
+    link.download = "BYV.jpeg";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+}
+
+/* 🔄 REINICIAR */
+function reiniciarHistoria(){
+
+    escena = 0;
+    i = 0;
+    escribiendo = false;
+
+    const el = document.getElementById("mensaje");
+
+    el.innerHTML = "";
+
+    document.getElementById("restartBtn")
+    .classList.remove("show");
+
+    document.getElementById("downloadBtn")
+    .classList.remove("show");
+
+    nextScene();
+}
+
+/* 🌙 PARTÍCULAS */
+function bokeh(){
+
+    const b = document.createElement("div");
+
+    b.classList.add("bokeh");
+
+    b.innerHTML = ["❤","✨","💖"][Math.floor(Math.random()*3)];
+
+    b.style.left = Math.random()*100 + "vw";
+
+    b.style.fontSize = (8 + Math.random()*25) + "px";
+
+    b.style.animationDuration = (8 + Math.random()*10) + "s";
+
+    document.body.appendChild(b);
+
+    setTimeout(()=>b.remove(),9000);
+}
+
+setInterval(bokeh,180);
+
+/* 🌌 ESTRELLAS */
+for(let i=0;i<100;i++){
+
+    const star = document.createElement("div");
+
+    star.classList.add("star");
+
+    let size = Math.random()*3;
+
+    star.style.width = size+"px";
+    star.style.height = size+"px";
+
+    star.style.left = Math.random()*100+"vw";
+    star.style.top = Math.random()*100+"vh";
+
+    star.style.animationDuration = (8+Math.random()*10)+"s";
+
+    document.body.appendChild(star);
+}
+
+</script>
+
+</body>
+</html>
